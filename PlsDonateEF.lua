@@ -231,7 +231,6 @@ local booths = {
 local queueonteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport) or nil
 local httprequest = (syn and syn.request) or http and http.request or http_request or (fluxus and fluxus.request) or request
 local httpservice = game:GetService('HttpService')
---IMPORTANT TO CHANGE THIS
 if queueonteleport then
 	queueonteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ExaliaFaux/plsdonateXF/main/PlsDonateEF.lua'))()")
 end
@@ -329,7 +328,6 @@ local sNames = {
 	"donateResponce",
 	"otherResponce",
 	"scamResponce",
-	"goalResponce",
 	"pingEveryone",
 	"pingAboveDono",
 	"removeHeadNametag",
@@ -337,8 +335,7 @@ local sNames = {
 	"jumpBoost",
 	'goalServerhopSwitch',
 	'goalServerhopGoal',
-	'highlightSwitch',
-	'GoalBar'
+	'highlightSwitch'
 }
 
 local positionX = workspace:WaitForChild('Boomboxes'):WaitForChild('Spawn')
@@ -348,7 +345,7 @@ local sValues = {
 	30,
 	true,
 	15,
-	"#BE32CD",
+	"#32CD32",
 	5,
 	false,
 	"",
@@ -616,28 +613,12 @@ local function slider(value, whichSlider)
 	end
 end
 
-local goalUpdate = true
-
 function updateBoothText()
 	local text
-	local GoalBarText
 	local current = Players.LocalPlayer.leaderstats.Raised.Value
-	local goal
-	if goalUpdate then
-		goal = current + tonumber(getgenv().settings.goalBox)
-		goalUpdate = false
-	end
-	local goalBars
-	local totalBars = 20
-	local currentBars
-	local ratio = current / goal
-	local currentGroup = string.rep('|', currentBars)
-    local goalGroup = string.rep('|', goalBars)
+	local goal = current + tonumber(getgenv().settings.goalBox)
 	if goal == 420 or goal == 425 then
 		goal = goal + 10
-	end
-	if current >= goal then
-        goal = current + tonumber(getgenv().settings.goalBox)
 	end
 	if current == 420 or current == 425 then
 		current = current + 10
@@ -660,7 +641,6 @@ function updateBoothText()
 	elseif current > 9999 then
 		current = string.format("%.1fk", current / 10 ^ 3)
 	end
-	
 	if getgenv().settings.textUpdateToggle and getgenv().settings.customBoothText then
 		text = string.gsub(getgenv().settings.customBoothText, "$C", current)
 		text = string.gsub (text, "$G", goal)
@@ -668,11 +648,7 @@ function updateBoothText()
 		if not getgenv().settings.noFont then
 			boothText = tostring('<font face="' .. getgenv().settings.fontFace .. '" size="' .. getgenv().settings.fontSize .. '" color="#' .. getgenv().settings.hexBox .. '">' .. text .. '</font>')
 		else
-		if getgenv().settings.GoalBar then
-			boothText = tostring(text .. GoalBarText)
-		else
-			boothText = tostring(text)
-			end
+			boothText = tostring('<font color="#' .. getgenv().settings.hexBox .. '">' .. text .. '</font>')
 		end
 		--Updates the booth text
 		local myBooth = Players.LocalPlayer.PlayerGui.MapUIContainer.MapUI.BoothUI:FindFirstChild(tostring("BoothUI" .. unclaimed[1]))
@@ -869,7 +845,6 @@ local webhookTab = Window:AddTab("Webhook")
 local serverHopTab = Window:AddTab("Server")
 local otherTab = Window:AddTab("Other")
 local otherTab2 = Window:AddTab("Other 2")
-local otherTab3 = Window:AddTab("Other 3")
 local supportTab = Window:AddTab("Support")
 local TextService = game:GetService("TextService")
 local sgoalR = 0
@@ -897,18 +872,6 @@ local noFontSwitch = boothTab:AddSwitch("No Font", function(bool)
 	end
 end)
 noFontSwitch:Set(getgenv().settings.noFont)
-
-local GoalBarSwitch = boothTab:AddSwitch("Goal Bar", function(bool)
-	if settingsLock then
-		return
-	end
-	getgenv().settings.GoalBar = bool
-	saveSettings()
-	if bool then
-		updateBoothText()
-	end
-end)
-GoalBarSwitch:Set(getgenv().settings.GoalBar)
 
 textUpdateToggle:Set(getgenv().settings.textUpdateToggle)
 local textUpdateDelay = boothTab:AddSlider("Text Update Delay (S)", function(x)
@@ -1549,27 +1512,6 @@ otherTab2:AddButton("Save Replies", function()
 	getgenv().settings.scamResponce = rsplit
 	saveSettings()
 end)
-
---Other 3 tab
-otherTab3:AddLabel("Goal Reached Response!")
-local GoalResponce = otherTab2:AddConsole({
-	["y"] = 45,
-	["source"] = "",
-})
-local hfull = ''
-for i, v in ipairs(getgenv().settings.goalResponce) do
-	hfull = hfull .. v .. "\n"
-end
-GoalResponce:Set(hfull)
-otherTab3:AddButton("Save Replies", function()
-	local rsplit = {}
-	for newline in string.gmatch(GoalResponce:Get(), "[^\n]+") do
-		table.insert(rsplit, newline)
-	end
-	saveSettings()
-end)
-
--- Waow
 
 supportTab:AddLabel("Hello. This script is free but I won't resist")
 supportTab:AddLabel("from some robux :3")
