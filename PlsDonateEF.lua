@@ -920,7 +920,7 @@ end
 customBoothText:Set(getgenv().settings.customBoothText)
 
 boothTab:AddButton("Update", function()
-	if #customBoothText:Get() > 249 then
+	if #customBoothText:Get() > 250 then
 		customBoothText:Set("Character limit reached")
 		return warn('CHARACTER LIMIT REACHED')
 	end
