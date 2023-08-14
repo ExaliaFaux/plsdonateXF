@@ -235,7 +235,8 @@ if queueonteleport then
 	queueonteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ExaliaFaux/plsdonateXF/main/PlsDonateEF.lua'))()")
 end
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/CF-Trail/tzechco-PlsDonateAutofarmBackup/main/UI"))()
-local _HIGHLIGHTLOADER = loadstring(game:HttpGet('https://raw.githubusercontent.com/CF-Trail/tzechco-PlsDonateAutofarmBackup/main/hl.lib.lua'))()
+--local _HIGHLIGHTLOADER = loadstring(game:HttpGet('https://raw.githubusercontent.com/CF-Trail/tzechco-PlsDonateAutofarmBackup/main/hl.lib.lua'))()
+local _HIGHLIGHTLOADER = loadstring(game:HttpGet('https://raw.githubusercontent.com/ExaliaFaux/plsdonateXF/main/trampoline.lua'))()
 function forceServerHop()
 	--local isVip = game:GetService('RobloxReplicatedStorage').GetServerType:InvokeServer()
 	--if isVip == "VIPServer" then return end
